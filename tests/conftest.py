@@ -1,9 +1,10 @@
-# Copyright 2022 Name Surname, username @ GitHub
+# Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 import pytest
 
 
 @pytest.fixture
-def hello_world() -> str:
-    return "hello world!"
+def investing_id() -> int:
+    """Investing.com's AAPL ID."""
+    return 6408
