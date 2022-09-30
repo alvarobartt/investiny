@@ -2,10 +2,9 @@
 # See LICENSE for details.
 
 import json
+from datetime import datetime
 from typing import Any, Dict, Literal
 from uuid import uuid4
-
-from datetime import datetime
 
 import httpx
 
