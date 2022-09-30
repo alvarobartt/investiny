@@ -1,0 +1,20 @@
+{
+	"build": {
+		"dockerfile": "../../Dockerfile.gpu"
+	},
+    "runArgs": [
+        "--gpus=all"
+    ],
+	"extensions": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"eamodio.gitlens",
+		"bungcip.better-toml",
+		"ms-azuretools.vscode-docker",
+		"zhuangtongfa.material-theme",
+		"redhat.vscode-yaml",
+		"tamasfe.even-better-toml",
+		"seatonjiang.gitmoji-vscode",
+		"GitHub.copilot"
+	]
+}

@@ -1,0 +1,90 @@
+name: ci-cd
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/ci-cd.yaml
+      - src/**
+      - tests/**
+  release:
+    types:
+      - published
+
+jobs:
+  check-quality:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}:main
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: quality
+        run: poetry run make quality
+
+  check-types:
+    needs: check-quality
+
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}:main
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: types
+        run: poetry run make types
+
+  run-tests:
+    needs: check-types
+
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}:main
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install-package
+        run: poetry install
+
+      - name: tests
+        run: poetry run make tests
+
+  publish-package:
+    needs: run-tests
+    if: github.event_name == 'release'
+
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}:main
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: config-pypi
+        run: poetry config pypi-token.pypi $PYPI_TOKEN
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+
+      - name: publish-package
+        run: poetry publish --build
