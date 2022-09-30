@@ -1,10 +1,7 @@
 {
 	"build": {
-		"dockerfile": "../../Dockerfile.gpu"
+		"dockerfile": "../Dockerfile"
 	},
-    "runArgs": [
-        "--gpus=all"
-    ],
 	"extensions": [
 		"ms-python.python",
 		"ms-python.vscode-pylance",
