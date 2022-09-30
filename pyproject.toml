@@ -3,19 +3,19 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "package"
-version = "0.0.1"
+name = "investiny"
+version = "0.1.0"
 packages = [
-    { include = "package", from = "src" },
+    { include = "investiny", from = "src" },
 ]
-description = "Python package description."
+description = "`investpy` but made tiny."
 authors = [
-    "Name Surname <email>"
+    "Alvaro Bartolome <alvarobartt@yahoo.com>"
 ]
 readme = "README.md"
-homepage = "https://github.com/username/package"
-documentation = "https://github.com/username/package"
-repository = "https://package.readthedocs.io/"
+homepage = "https://github.com/alvarobartt/investiny"
+documentation = "https://github.com/alvarobartt/investiny"
+repository = "https://investiny.readthedocs.io/"
 license = "MIT License"
 
 [tool.poetry.dependencies]
