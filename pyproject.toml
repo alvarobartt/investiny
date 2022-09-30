@@ -20,6 +20,7 @@ license = "MIT License"
 
 [tool.poetry.dependencies]
 python = "^3.9"
+httpx = "^0.23.0"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"
