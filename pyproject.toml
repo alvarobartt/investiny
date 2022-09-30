@@ -49,3 +49,7 @@ warn_return_any = true
 implicit_reexport = false
 strict_equality = true
 # --strict end
+
+[[tool.mypy.overrides]]
+module = "investiny"
+implicit_reexport = true
