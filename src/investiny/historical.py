@@ -45,6 +45,7 @@ def historical_data(
         investing_id (int): Investing.com's ID for the asset.
         from_date (str): Initial date to retrieve historical data (formatted as m/d/Y).
         to_date (str): Final date to retrieve historical data (formatted as m/d/Y).
+        interval (Literal["D", "W", "M"], optional): Interval to retrieve historical data. Defaults to "D" which stands for Daily.
 
     Returns:
         Dict[str, Any]: A dictionary with the historical data.
