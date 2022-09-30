@@ -50,23 +50,13 @@ def historical_data(
     Returns:
         Dict[str, Any]: A dictionary with the historical data.
     """
-    url = f"https://tvc4.investing.com/{uuid4().hex}/0/0/0/0/history"
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like"
-            " Gecko) Chrome/104.0.5112.102 Safari/537.36"
-        ),
-        "Referer": "https://tvc-invdn-com.investing.com/",
-        "Content-Type": "application/json",
-    }
     params = {
         "symbol": investing_id,
         "from": int(datetime.strptime(from_date, "%m/%d/%Y").timestamp()),
         "to": int(datetime.strptime(to_date, "%m/%d/%Y").timestamp()),
         "resolution": interval,
     }
-    r = httpx.get(url, params=params, headers=headers)
-    data = json.loads(r.text)
+    data = request_to_investing(params=params)
     return {
         "open": data["o"],
         "high": data["h"],
