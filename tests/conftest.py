@@ -6,5 +6,17 @@ import pytest
 
 @pytest.fixture
 def investing_id() -> int:
-    """Investing.com's AAPL ID."""
+    """Investing.com's ID for the asset (in this case, AAPL)."""
     return 6408
+
+
+@pytest.fixture
+def from_date() -> str:
+    """Initial date to retrieve historical data (formatted as m/d/Y)."""
+    return "01/01/2021"
+
+
+@pytest.fixture
+def to_date() -> str:
+    """Final date to retrieve historical data (formatted as m/d/Y)."""
+    return "01/01/2022"

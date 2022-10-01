@@ -7,3 +7,4 @@ __author__ = "Alvaro Bartolome, alvarobartt @ GitHub"
 __version__ = "0.1.0"
 
 from investiny.historical import historical_data  # noqa: F401
+from investiny.recent import recent_data  # noqa: F401
