@@ -20,7 +20,7 @@ the petition as it may be useful towards the continuity of `investpy` at https:/
 Finally, remember that `investiny` is super simple and tiny and shouldn't be considered reliable, it's
 working fine so far, but it may be discontinued, so please use it carefully.
 
-## 🤏🏻 Usage
+## 💻 Usage
 
 ```python
 from investiny import historical_data
@@ -28,7 +28,19 @@ from investiny import historical_data
 data = historical_data(investing_id=6408, from_date="09/01/2022", to_date="10/01/2022") # Returns AAPL historical data as JSON (without date)
 ```
 
+```python
+from investiny import recent_data
+
+data = recent_data(investing_id=6408) # Returns AAPL recent data as JSON (without date)
+```
+
 ## 🔮 TODOs
 
 - [ ] Add Search API as also available https://tvc4.investing.com/.../search?limit=30&query=USD&type=&exchange= (thanks again @ramakrishnamekala129)
+- [ ] Include date formatted as %m/%d/%Y in output JSON
+- [ ] Add simple scraper for Investing.com IDs?
 - [ ] Add error basic error handling
+- [ ] Should `historical_data` work without `from_date` and `to_date` inheriting `recent_data` behavior?
+- [ ] Even though it's working fine so far and it seems stable, should we run stress tests?
+- [ ] Ideally we should keep the lenght of `investiny` code to less than 200 lines total?
+- [ ] Add more issues so that community can contribute (also Hacktoberfest 2022 is starting?)
