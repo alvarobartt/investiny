@@ -1,8 +1,7 @@
 # Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import json
-from typing import Any, Dict
+from typing import Any, Dict, List, Literal, Union
 from uuid import uuid4
 
 import httpx
@@ -10,16 +9,19 @@ import httpx
 __all__ = ["request_to_investing"]
 
 
-def request_to_investing(params: Dict[str, Any]) -> Dict[str, Any]:
+def request_to_investing(
+    endpoint: Literal["history", "search"], params: Dict[str, Any]
+) -> Union[Dict[str, Any], List[Dict[str, Any]]]:
     """Sends an HTTP GET request to Investing.com API with the introduced params.
 
     Args:
+        endpoint (Literal["history", "search"]): Endpoint to send the request to.
         params (Dict[str, Any]): A dictionary with the params to send to Investing.com API.
 
     Returns:
         Dict[str, Any]: A dictionary with the response from Investing.com API.
     """
-    url = f"https://tvc4.investing.com/{uuid4().hex}/0/0/0/0/history"
+    url = f"https://tvc4.investing.com/{uuid4().hex}/0/0/0/0/{endpoint}"
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like"
@@ -33,4 +35,4 @@ def request_to_investing(params: Dict[str, Any]) -> Dict[str, Any]:
         raise ConnectionError(
             f"Request to Investing.com API failed with error code: {r.status_code}."
         )
-    return json.loads(r.text)  # type: ignore
+    return r.json()  # type: ignore

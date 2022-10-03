@@ -20,3 +20,9 @@ def from_date() -> str:
 def to_date() -> str:
     """Final date to retrieve historical data (formatted as m/d/Y)."""
     return "01/01/2022"
+
+
+@pytest.fixture
+def query() -> str:
+    """Query to search assets in Investing.com."""
+    return "GOOGL"

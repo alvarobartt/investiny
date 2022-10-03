@@ -30,22 +30,22 @@ def historical_data(
         Dict[str, Any]: A dictionary with the historical data.
     """
     if from_date and to_date:
-        from_date = datetime.strptime(from_date, "%m/%d/%Y")
-        to_date = datetime.strptime(to_date, "%m/%d/%Y")
+        from_datetime = datetime.strptime(from_date, "%m/%d/%Y")
+        to_datetime = datetime.strptime(to_date, "%m/%d/%Y")
     else:
-        to_date = datetime.now()
-        from_date = to_date - timedelta(days=30)
+        to_datetime = datetime.now()
+        from_datetime = to_datetime - timedelta(days=30)
 
     params = {
         "symbol": investing_id,
-        "from": int(from_date.timestamp()),
-        "to": int(to_date.timestamp()),
+        "from": int(from_datetime.timestamp()),
+        "to": int(to_datetime.timestamp()),
         "resolution": interval,
     }
-    data = request_to_investing(params=params)
+    data = request_to_investing(endpoint="history", params=params)
     return {
-        "open": data["o"],
-        "high": data["h"],
-        "low": data["l"],
-        "close": data["c"],
+        "open": data["o"],  # type: ignore
+        "high": data["h"],  # type: ignore
+        "low": data["l"],  # type: ignore
+        "close": data["c"],  # type: ignore
     }

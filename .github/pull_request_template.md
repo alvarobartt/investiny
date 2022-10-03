@@ -18,6 +18,6 @@ Add here the reference to the issue/s referenced in this PR
 
 ## 🧪 Tests
 
-- [ ] Did you implement unit tests for the developed feature or solved bug?
+- [ ] Did you implement unit tests if required?
 
-If the above checkbox is checked, then describe how did you unit tested it.
+If the above checkbox is checked, describe how you unit tested it.
