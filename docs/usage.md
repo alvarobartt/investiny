@@ -1,4 +1,4 @@
-## 💻 Usage
+# 💻 Usage
 
 Retrieve historical data from Investing.com using the Investing.com ID of the asset
 that you want to retrieve the data from.

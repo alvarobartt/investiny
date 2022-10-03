@@ -1,4 +1,4 @@
-## 🛠️ Installation
+# 🛠️ Installation
 
 ```console
 $ pip install investiny
