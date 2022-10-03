@@ -1,0 +1,1 @@
+# 🤏🏻 `investpy` but made tiny
