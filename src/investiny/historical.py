@@ -42,7 +42,7 @@ def historical_data(
         "to": int(to_date.timestamp()),
         "resolution": interval,
     }
-    data = request_to_investing(params=params)
+    data = request_to_investing(endpoint="history", params=params)
     return {
         "open": data["o"],
         "high": data["h"],
