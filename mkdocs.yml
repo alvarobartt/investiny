@@ -1,0 +1,5 @@
+site_name: investiny
+site_url: https://github.com/alvarobartt/investiny
+nav:
+  - Home: index.md
+theme: material
