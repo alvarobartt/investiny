@@ -1,7 +1,7 @@
 # Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from typing import Any, Dict, Literal
+from typing import Any, Dict, List, Literal, Union
 from uuid import uuid4
 
 import httpx
@@ -11,7 +11,7 @@ __all__ = ["request_to_investing"]
 
 def request_to_investing(
     endpoint: Literal["history", "search"], params: Dict[str, Any]
-) -> Dict[str, Any]:
+) -> Union[Dict[str, Any], List[Dict[str, Any]]]:
     """Sends an HTTP GET request to Investing.com API with the introduced params.
 
     Args:

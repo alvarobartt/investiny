@@ -33,4 +33,4 @@ def search_assets(
         "type": type if type else "",
         "exchange": exchange if exchange else "",
     }
-    return request_to_investing(endpoint="search", params=params)
+    return request_to_investing(endpoint="search", params=params)  # type: ignore
