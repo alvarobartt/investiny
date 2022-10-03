@@ -29,4 +29,8 @@ def request_to_investing(params: Dict[str, Any]) -> Dict[str, Any]:
         "Content-Type": "application/json",
     }
     r = httpx.get(url, params=params, headers=headers)
+    if r.status_code != 200:
+        raise ConnectionError(
+            f"Request to Investing.com API failed with error code: {r.status_code}."
+        )
     return json.loads(r.text)  # type: ignore
