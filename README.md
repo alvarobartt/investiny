@@ -24,7 +24,7 @@ working fine so far, but it may be discontinued, so please use it carefully.
 
 ## 🛠️ Installation
 
-🤏🏻 `investiny` can be installed with `pip` as it follows:
+🤏🏻 `investiny` requires Python 3.9+ and can be installed with `pip` as it follows:
 
 `pip install investiny`
 
@@ -32,11 +32,17 @@ working fine so far, but it may be discontinued, so please use it carefully.
 
 ## 💻 Usage
 
+Retrieve historical data from Investing.com using the Investing.com ID of the asset
+that you want to retrieve the data from.
+
 ```python
 from investiny import historical_data
 
 data = historical_data(investing_id=6408, from_date="09/01/2022", to_date="10/01/2022") # Returns AAPL historical data as JSON (without date)
 ```
+
+And, also retrive recent data (no need to specify dates, it's just the last 30 days) from
+Investing.com using the Investing.com ID of the asset that you want to retrieve the data from.
 
 ```python
 from investiny import recent_data
