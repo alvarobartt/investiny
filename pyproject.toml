@@ -4,11 +4,11 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "investiny"
-version = "0.1.0"
+version = "0.2.0"
 packages = [
     { include = "investiny", from = "src" },
 ]
-description = "`investpy` but made tiny."
+description = "🤏🏻 `investpy` but made tiny."
 authors = [
     "Alvaro Bartolome <alvarobartt@yahoo.com>"
 ]
