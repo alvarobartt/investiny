@@ -84,7 +84,7 @@ jobs:
         run: poetry install --extras "docs"
 
       - name: deploy-to-gh-pages
-        run: mkdocs gh-deploy --force
+        run: poetry run mkdocs gh-deploy --force
 
   publish-package:
     needs: deploy-docs
