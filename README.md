@@ -20,6 +20,16 @@ the petition as it may be useful towards the continuity of `investpy` at https:/
 Finally, remember that `investiny` is super simple and tiny and shouldn't be considered reliable, it's
 working fine so far, but it may be discontinued, so please use it carefully.
 
+---
+
+## 🛠️ Installation
+
+🤏🏻 `investiny` can be installed with `pip` as it follows:
+
+`pip install investiny`
+
+---
+
 ## 💻 Usage
 
 ```python
@@ -34,9 +44,11 @@ from investiny import recent_data
 data = recent_data(investing_id=6408) # Returns AAPL recent data as JSON (without date)
 ```
 
+---
+
 ## 🔮 TODOs
 
-- [ ] Add Search API as also available https://tvc4.investing.com/.../search?limit=30&query=USD&type=&exchange= (thanks again @ramakrishnamekala129)
+- [ ] Add Search API as also available https://tvc4.investing.com/.../search?limit=30&query=USD&type=&exchange= (thanks again @ramakrishnamekala129) (also requested in [#4](https://github.com/alvarobartt/investiny/issues/4))
 - [ ] Include date formatted as %m/%d/%Y in output JSON
 - [ ] Add simple scraper for Investing.com IDs?
 - [ ] Add error basic error handling
