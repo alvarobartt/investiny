@@ -1,5 +1,34 @@
-site_name: investiny
+site_name: 🤏🏻 investiny
 site_url: https://github.com/alvarobartt/investiny
+site_author: Alvaro Bartolome
+site_description: investpy but made tiny
+
+repo_name: alvarobartt/investiny
+repo_url: https://github.com/alvarobartt/investiny
+
+copyright: Copyright &copy; 2022 Alvaro Bartolome
+
+theme: material
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+
+extra:
+  social:
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/investiny/
+    - icon: fontawesome/brands/github
+      link: https://github.com/alvarobartt
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/alvarobartt
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/alvarobartt/
+
 nav:
   - Home: index.md
-theme: material
+  - Requirements: requirements.md
+  - Installation: installation.md
+  - Usage: usage.md
+  - License: license.md
