@@ -57,8 +57,8 @@ data = recent_data(investing_id=6408) # Returns AAPL recent data as JSON (withou
 - [ ] Add Search API as also available https://tvc4.investing.com/.../search?limit=30&query=USD&type=&exchange= (thanks again @ramakrishnamekala129) (also requested in [#4](https://github.com/alvarobartt/investiny/issues/4))
 - [ ] Include date formatted as %m/%d/%Y in output JSON
 - [ ] Add simple scraper for Investing.com IDs?
-- [ ] Add error basic error handling
-- [ ] Should `historical_data` work without `from_date` and `to_date` inheriting `recent_data` behavior?
+- [X] Add error basic error handling
+- [X] Should `historical_data` work without `from_date` and `to_date` inheriting `recent_data` behavior?
 - [ ] Even though it's working fine so far and it seems stable, should we run stress tests?
 - [ ] Ideally we should keep the lenght of `investiny` code to less than 200 lines total?
 - [ ] Add more issues so that community can contribute (also Hacktoberfest 2022 is starting?)

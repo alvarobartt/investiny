@@ -13,3 +13,10 @@ def test_historical(investing_id: int, from_date: str, to_date: str) -> None:
     )
     assert all(key in res.keys() for key in ["open", "high", "low", "close"])
     assert isinstance(res, dict)
+
+
+@pytest.mark.usefixtures("investing_id")
+def test_historical_without_dates(investing_id: int) -> None:
+    res = historical_data(investing_id=investing_id)
+    assert all(key in res.keys() for key in ["open", "high", "low", "close"])
+    assert isinstance(res, dict)
