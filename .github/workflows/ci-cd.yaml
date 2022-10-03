@@ -66,8 +66,28 @@ jobs:
       - name: tests
         run: poetry run make tests
 
-  publish-package:
+  deploy-docs:
     needs: run-tests
+
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}:main
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install-docs
+        run: poetry install --extras "docs"
+
+      - name: deploy-to-gh-pages
+        run: mkdocs gh-deploy --force
+
+  publish-package:
+    needs: deploy-docs
     if: github.event_name == 'release'
 
     runs-on: ubuntu-latest
