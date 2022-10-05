@@ -44,6 +44,7 @@ def historical_data(
     }
     data = request_to_investing(endpoint="history", params=params)
     return {
+        "date": [datetime.fromtimestamp(t).strftime("%m/%d/%Y") for t in data["t"]],  # type: ignore
         "open": data["o"],  # type: ignore
         "high": data["h"],  # type: ignore
         "low": data["l"],  # type: ignore
