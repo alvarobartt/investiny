@@ -1,4 +1,4 @@
-.PHONY: quality style types tests
+.PHONY: quality style types tests build-docs serve-docs
 
 quality:
 	black --check --target-version py39 --preview src/investiny tests
@@ -14,3 +14,9 @@ types:
 
 tests:
 	pytest tests/ --durations 0 -s
+
+build-docs:
+	mkdocs build
+
+serve-docs:
+	mkdocs serve
