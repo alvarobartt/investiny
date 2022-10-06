@@ -28,7 +28,9 @@ extra:
 
 nav:
   - Home: index.md
+  - Differences with investpy: differences-with-investpy.md
   - Requirements: requirements.md
   - Installation: installation.md
   - Usage: usage.md
   - License: license.md
+  - Disclaimer: disclaimer.md
