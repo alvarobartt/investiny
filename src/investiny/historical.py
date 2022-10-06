@@ -13,7 +13,7 @@ def historical_data(
     investing_id: int,
     from_date: Union[str, None] = None,
     to_date: Union[str, None] = None,
-    interval: Literal["D", "W", "M"] = "D",
+    interval: Literal[1, 5, 15, 30, 45, 60, 120, 240, 300, "D", "W", "M"] = "D",
 ) -> Dict[str, Any]:
     """Get historical data from Investing.com.
 
@@ -21,7 +21,7 @@ def historical_data(
         investing_id (int): Investing.com's ID for the asset.
         from_date (Union[str, None], optional): Initial date to retrieve historical data (formatted as m/d/Y). Defaults to None.
         to_date (Union[str, None], optional): Final date to retrieve historical data (formatted as m/d/Y). Defaults to None.
-        interval (Literal["D", "W", "M"], optional): Interval to retrieve historical data. Defaults to "D" which stands for Daily.
+        interval (Literal[1, 5, 15, 30, 45, 60, 120, 240, 300, "D", "W", "M"], optional): Interval between each historical data point. Defaults to "D".
 
     Note:
         If no dates are introduced, the function will retrieve the last 30 days of historical data.
@@ -43,8 +43,9 @@ def historical_data(
         "resolution": interval,
     }
     data = request_to_investing(endpoint="history", params=params)
+    time_format = "%H:%M %m/%d/%Y" if isinstance(interval, int) else "%m/%d/%Y"
     return {
-        "date": [datetime.fromtimestamp(t).strftime("%m/%d/%Y") for t in data["t"]],  # type: ignore
+        "date": [datetime.fromtimestamp(t).strftime(time_format) for t in data["t"]],  # type: ignore
         "open": data["o"],  # type: ignore
         "high": data["h"],  # type: ignore
         "low": data["l"],  # type: ignore
