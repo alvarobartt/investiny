@@ -5,20 +5,27 @@ to add more or less the same functionality that was developed for `investpy` whi
 package tiny and up-to-date, as some solutions just work temporarily.
 
 Everyone using `investiny` please go thank @ramakrishnamekala129 for proposing this solution
-that seems to be stable and working fine so far (fingers crossed!). Also take the chance to explore
-any other solution proposed by the `investpy` users at https://github.com/alvarobartt/investpy/issues.
+that seems to be stable and working fine so far (fingers crossed!).
 
-I'm currently waiting to have a conversation with Investing.com so as to see whether we can get
-to some sort of an agreement in order to keep `investpy` alive.
+Remember that `investiny` shouldn't be considered reliable, as even though it's working fine, 
+it may be discontinued, so please use it mindfully.
 
-In the meantime you can follow me at https://twitter.com/alvarobartt as I post updates there, and
-I highly appreciate your feedback.
+---
 
-@adelRosal, an `investpy` user created a change.org site so as to show some support, so please sign
-the petition as it may be useful towards the continuity of `investpy` at https://www.change.org/p/support-from-investing-com-for-the-continuity-of-investpy-library
+## 🤔 What are the differences with `investpy`?
 
-Finally, remember that `investiny` is super simple and tiny and shouldn't be considered reliable, it's
-working fine so far, but it may be discontinued, so please use it carefully.
+**`investiny` is faster, lighter and easier to use**, but with reduced functionality for the moment. `investiny` 
+lets you retrieve historical data from Investing.com through `historical_data` and search any available asset
+through `search_assets`, while `investpy` offers more functions to also retrieve technical indicators, economic
+calendars, dividends, etc. but those will come at some point to `investiny` too.
+
+✨ `investiny` introduces intraday data, so the specified intervals when retrieving historical data for any asset
+available at Investing.com goes from 1 minute to monthly data.
+
+`investpy` uses Investing.com's APIs at https://www.investing.com/instruments/HistoricalDataAjax and at
+https://api.investing.com/api/financialdata/historical, that are Cloudflare protected and not working any more,
+as you'll end up getting blocked with 403 Forbidden HTTP code; while `investiny` is using https://tvc4.investing.com/,
+which seems to be more reliable right now according to the ran tests, as well as providing intraday data.
 
 ---
 
@@ -63,15 +70,12 @@ investing_id = int(search_results[0]["ticker"]) # Assuming the first entry is th
 data = historical_data(investing_id=investing_id, from_date="09/01/2022", to_date="10/01/2022")
 ```
 
----
+## ⚠️ Disclaimer
 
-## 🔮 TODOs
+Investing.com is a registered trademark from Investing.com, and their services offered by Fusion Media Limited.
 
-- [X] Add Search API as also available https://tvc4.investing.com/.../search?limit=30&query=USD&type=&exchange= (thanks again @ramakrishnamekala129) (also requested in [#4](https://github.com/alvarobartt/investiny/issues/4))
-- [ ] Include date formatted as %m/%d/%Y in output JSON
-- [ ] Add simple scraper for Investing.com IDs?
-- [X] Add error basic error handling
-- [X] Should `historical_data` work without `from_date` and `to_date` inheriting `recent_data` behavior?
-- [ ] Even though it's working fine so far and it seems stable, should we run stress tests?
-- [ ] Ideally we should keep the lenght of `investiny` code to less than 200 lines total?
-- [ ] Add more issues so that community can contribute (also Hacktoberfest 2022 is starting?)
+Neither `investpy` nor `investiny` are affiliated, endorsed, or vetted by Investing.com.
+
+Both `investpy` and `investiny` are open source packages that use Investing.com's available data, intended for research and educational purposes only.
+
+You should refer to Investing.com's terms and conditions at https://www.investing.com/about-us/terms-and-conditions for details on your rights to use the actual data, as it is intended for personal use only.
