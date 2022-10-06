@@ -20,7 +20,7 @@ def search_assets(
             "Index",
             "Index Future",
             "certificate",
-            "Bond Yield",
+            "Yield",
             "Forex",
         ],
         None,
