@@ -44,10 +44,13 @@ def historical_data(
     }
     data = request_to_investing(endpoint="history", params=params)
     time_format = "%H:%M %m/%d/%Y" if isinstance(interval, int) else "%m/%d/%Y"
-    return {
+    output = {
         "date": [datetime.fromtimestamp(t).strftime(time_format) for t in data["t"]],  # type: ignore
         "open": data["o"],  # type: ignore
         "high": data["h"],  # type: ignore
         "low": data["l"],  # type: ignore
         "close": data["c"],  # type: ignore
     }
+    if "v" in data:
+        output["volume"] = data["v"]  # type: ignore
+    return output
