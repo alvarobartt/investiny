@@ -25,6 +25,17 @@ def search_assets(
     ] = None,
     exchange: Union[str, None] = None,
 ) -> List[Dict[str, Any]]:
+    """Search any available asset at Investing.com.
+
+    Args:
+        query (str): Query to search for.
+        limit (int, optional): Maximum number of results to retrieve. Defaults to 10.
+        type (Union[Literal["Stock", "ETF", "Commodity", "Index", "Future", "Yield", "FX"], None], optional): Type of asset to search for. Defaults to None.
+        exchange (Union[str, None], optional): Exchange to search for. Defaults to None.
+
+    Returns:
+        List[Dict[str, Any]]: A list of dictionaries with the search results.
+    """
     params = {
         "query": query,
         "limit": limit,
