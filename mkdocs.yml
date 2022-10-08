@@ -33,6 +33,7 @@ plugins:
   - git-revision-date-localized:
       type: timeago
       enable_creation_date: true
+  - mkdocstrings:
 
 extra:
   social:
