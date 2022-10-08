@@ -8,7 +8,20 @@ repo_url: https://github.com/alvarobartt/investiny
 
 copyright: Copyright &copy; 2022 Alvaro Bartolome
 
-theme: material
+theme:
+  name: material
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
 
 markdown_extensions:
   - pymdownx.highlight:
