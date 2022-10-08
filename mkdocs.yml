@@ -52,6 +52,7 @@ nav:
   - Requirements: requirements.md
   - Installation: installation.md
   - Usage: usage.md
+  - Integrations: integrations.md
   - API Reference:
       - Historical: api/historical.md
       - Search: api/search.md
