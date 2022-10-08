@@ -8,12 +8,32 @@ repo_url: https://github.com/alvarobartt/investiny
 
 copyright: Copyright &copy; 2022 Alvaro Bartolome
 
-theme: material
+theme:
+  name: material
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Roboto
+    code: Roboto Mono
 
 markdown_extensions:
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.superfences
+
+plugins:
+  - search:
+  - git-revision-date-localized:
+      type: timeago
+      enable_creation_date: true
+  - mkdocstrings:
 
 extra:
   social:
@@ -32,5 +52,9 @@ nav:
   - Requirements: requirements.md
   - Installation: installation.md
   - Usage: usage.md
-  - License: license.md
+  - Integrations: integrations.md
+  - API Reference:
+      - Historical: api/historical.md
+      - Search: api/search.md
   - Disclaimer: disclaimer.md
+  - License: license.md
