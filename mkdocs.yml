@@ -28,6 +28,12 @@ markdown_extensions:
       anchor_linenums: true
   - pymdownx.superfences
 
+plugins:
+  - search:
+  - git-revision-date-localized:
+      type: timeago
+      enable_creation_date: true
+
 extra:
   social:
     - icon: fontawesome/brands/python

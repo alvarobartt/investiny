@@ -23,9 +23,10 @@ python = "^3.8"
 httpx = "^0.23.0"
 mkdocs = { version = "^1.4.0", optional = true }
 mkdocs-material = { version = "^8.5.4", optional = true }
+mkdocs-git-revision-date-localized-plugin = { version = "^1.1.0", optional = true }
 
 [tool.poetry.extras]
-docs = ["mkdocs", "mkdocs-material"]
+docs = ["mkdocs", "mkdocs-material", "mkdocs-git-revision-date-localized-plugin"]
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"
