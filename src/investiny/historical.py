@@ -1,10 +1,10 @@
 # Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
 from typing import Any, Dict, Literal, Union
 
-from investiny.utils import request_to_investing
+from investiny.utils import calculate_date_intervals, request_to_investing
 
 __all__ = ["historical_data"]
 
@@ -29,31 +29,9 @@ def historical_data(
     Returns:
         Dict[str, Any]: A dictionary with the historical data.
     """
-    if from_date and to_date:
-        from_datetimes = [
-            datetime.strptime(from_date, "%m/%d/%Y").astimezone(tz=timezone.utc)
-        ]
-        to_datetimes = [
-            datetime.strptime(to_date, "%m/%d/%Y").astimezone(tz=timezone.utc)
-        ]
-        if from_datetimes[0] > to_datetimes[0]:
-            raise ValueError("`from_date` cannot be greater than `to_date`")
-        if to_datetimes[0] - from_datetimes[0] > timedelta(
-            days=6940
-        ):  # round(365.25 * 19)
-            max_to_datetime = to_datetimes[0]
-            to_datetimes = [from_datetimes[0] + timedelta(days=6940)]
-            while to_datetimes[-1] - from_datetimes[-1] > timedelta(
-                days=6940
-            ):  # round(365.25*19) = 6940
-                from_datetimes.append(to_datetimes[-1] + timedelta(days=1))
-                to_datetimes.append(from_datetimes[-1] + timedelta(days=6940))
-            if to_datetimes[-1] != max_to_datetime:
-                from_datetimes.append(to_datetimes[-1] + timedelta(days=1))
-                to_datetimes.append(max_to_datetime)
-    else:
-        to_datetimes = [datetime.now(tz=timezone.utc)]
-        from_datetimes = [to_datetimes[0] - timedelta(days=30)]
+    from_datetimes, to_datetimes = calculate_date_intervals(
+        from_date=from_date, to_date=to_date, interval=interval
+    )
 
     result: Dict[str, Any] = {
         "date": [],

@@ -1,12 +1,16 @@
 # Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from typing import Any, Dict, List, Literal, Union
+import logging
+from datetime import datetime, timedelta, timezone
+from typing import Any, Dict, List, Literal, Tuple, Union
 from uuid import uuid4
 
 import httpx
 
-__all__ = ["request_to_investing"]
+logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+
+__all__ = ["calculate_date_intervals", "request_to_investing"]
 
 
 def request_to_investing(
@@ -36,3 +40,74 @@ def request_to_investing(
             f"Request to Investing.com API failed with error code: {r.status_code}."
         )
     return r.json()  # type: ignore
+
+
+def calculate_date_intervals(
+    from_date: Union[str, None] = None,
+    to_date: Union[str, None] = None,
+    interval: Literal[1, 5, 15, 30, 45, 60, 120, 240, 300, "D", "W", "M"] = "D",
+) -> Tuple[List[datetime], List[datetime]]:
+    """Calculates the intervals between the introduced dates.
+
+    Args:
+        from_date (Union[str, None], optional): Initial date to retrieve historical data (formatted as m/d/Y). Defaults to None.
+        to_date (Union[str, None], optional): Final date to retrieve historical data (formatted as m/d/Y). Defaults to None.
+        interval (Literal[1, 5, 15, 30, 45, 60, 120, 240, 300, "D", "W", "M"]): Interval between each historical data point. Defaults to "D".
+
+    Returns:
+        Tuple[List[str], List[str]]: A tuple with the from and to datetimes split by intervals.
+    """
+    interval2timedelta = {
+        1: timedelta(minutes=30),  # 30 minutes (half an hour)
+        5: timedelta(hours=1),  # 1 hour
+        15: timedelta(hours=3),  # 3 hours
+        30: timedelta(hours=6),  # 6 hours
+        45: timedelta(hours=12),  # 12 hours (half a day)
+        60: timedelta(hours=24),  # 24 hours (one day)
+        120: timedelta(hours=48),  # 48 hours (two days)
+        240: timedelta(hours=96),  # 96 hours (four days)
+        300: timedelta(hours=120),  # 120 hours (five days)
+        "D": timedelta(days=30),  # 30 days (~ 1 month)
+        "W": timedelta(days=90),  # 3 months
+        "M": timedelta(days=365),  # 1 year
+    }
+
+    if not from_date or not to_date:
+        to_datetimes = [datetime.now(tz=timezone.utc)]
+        from_datetimes = [to_datetimes[0] - interval2timedelta[interval]]
+        return (from_datetimes, to_datetimes)
+
+    from_datetimes = [
+        datetime.strptime(from_date, "%m/%d/%Y").astimezone(tz=timezone.utc)
+    ]
+    to_datetimes = [datetime.strptime(to_date, "%m/%d/%Y").astimezone(tz=timezone.utc)]
+
+    if from_datetimes[0] > to_datetimes[0]:
+        raise ValueError("`from_date` cannot be greater than `to_date`")
+
+    if interval not in ["D"]:
+        logging.warning(
+            "Interval calculation just implemented for `D` interval, not for"
+            f" {interval}, wait for its implementation."
+        )
+        return (from_datetimes, to_datetimes)
+
+    interval2limit = {
+        "D": timedelta(days=6940),  # round(365.25 * 19) days (19 years)
+    }
+
+    interval2increment = {
+        "D": timedelta(days=1),  # 1 day
+    }
+
+    if to_datetimes[0] - from_datetimes[0] > interval2limit[interval]:  # type: ignore
+        max_to_datetime = to_datetimes[0]
+        to_datetimes = [from_datetimes[0] + interval2limit[interval]]  # type: ignore
+        while to_datetimes[-1] - from_datetimes[-1] > interval2limit[interval]:  # type: ignore
+            from_datetimes.append(to_datetimes[-1] + interval2increment[interval])  # type: ignore
+            to_datetimes.append(from_datetimes[-1] + interval2limit[interval])  # type: ignore
+        if to_datetimes[-1] != max_to_datetime:
+            from_datetimes.append(to_datetimes[-1] + interval2increment[interval])  # type: ignore
+            to_datetimes.append(max_to_datetime)
+
+    return (from_datetimes, to_datetimes)
