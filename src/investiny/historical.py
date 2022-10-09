@@ -1,7 +1,7 @@
 # Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, Literal, Union
 
 from investiny.utils import request_to_investing
@@ -30,10 +30,12 @@ def historical_data(
         Dict[str, Any]: A dictionary with the historical data.
     """
     if from_date and to_date:
-        from_datetime = datetime.strptime(from_date, "%m/%d/%Y")
-        to_datetime = datetime.strptime(to_date, "%m/%d/%Y")
+        from_datetime = datetime.strptime(from_date, "%m/%d/%Y").astimezone(
+            tz=timezone.utc
+        )
+        to_datetime = datetime.strptime(to_date, "%m/%d/%Y").astimezone(tz=timezone.utc)
     else:
-        to_datetime = datetime.now()
+        to_datetime = datetime.now(tz=timezone.utc)
         from_datetime = to_datetime - timedelta(days=30)
 
     params = {
