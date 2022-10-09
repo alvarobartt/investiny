@@ -30,29 +30,56 @@ def historical_data(
         Dict[str, Any]: A dictionary with the historical data.
     """
     if from_date and to_date:
-        from_datetime = datetime.strptime(from_date, "%m/%d/%Y").astimezone(
-            tz=timezone.utc
-        )
-        to_datetime = datetime.strptime(to_date, "%m/%d/%Y").astimezone(tz=timezone.utc)
+        from_datetimes = [
+            datetime.strptime(from_date, "%m/%d/%Y").astimezone(tz=timezone.utc)
+        ]
+        to_datetimes = [
+            datetime.strptime(to_date, "%m/%d/%Y").astimezone(tz=timezone.utc)
+        ]
+        if from_datetimes[0] > to_datetimes[0]:
+            raise ValueError("`from_date` cannot be greater than `to_date`")
+        if to_datetimes[0] - from_datetimes[0] > timedelta(
+            days=6940
+        ):  # round(365.25 * 19)
+            max_to_datetime = to_datetimes[0]
+            to_datetimes = [from_datetimes[0] + timedelta(days=6940)]
+            while to_datetimes[-1] - from_datetimes[-1] > timedelta(
+                days=6940
+            ):  # round(365.25*19) = 6940
+                from_datetimes.append(to_datetimes[-1] + timedelta(days=1))
+                to_datetimes.append(from_datetimes[-1] + timedelta(days=6940))
+            if to_datetimes[-1] != max_to_datetime:
+                from_datetimes.append(to_datetimes[-1] + timedelta(days=1))
+                to_datetimes.append(max_to_datetime)
     else:
-        to_datetime = datetime.now(tz=timezone.utc)
-        from_datetime = to_datetime - timedelta(days=30)
+        to_datetimes = [datetime.now(tz=timezone.utc)]
+        from_datetimes = [to_datetimes[0] - timedelta(days=30)]
 
-    params = {
-        "symbol": investing_id,
-        "from": int(from_datetime.timestamp()),
-        "to": int(to_datetime.timestamp()),
-        "resolution": interval,
+    result: Dict[str, Any] = {
+        "date": [],
+        "open": [],
+        "high": [],
+        "low": [],
+        "close": [],
+        "volume": [],
     }
-    data = request_to_investing(endpoint="history", params=params)
-    time_format = "%H:%M %m/%d/%Y" if isinstance(interval, int) else "%m/%d/%Y"
-    output = {
-        "date": [datetime.fromtimestamp(t).strftime(time_format) for t in data["t"]],  # type: ignore
-        "open": data["o"],  # type: ignore
-        "high": data["h"],  # type: ignore
-        "low": data["l"],  # type: ignore
-        "close": data["c"],  # type: ignore
-    }
-    if "v" in data:
-        output["volume"] = data["v"]  # type: ignore
-    return output
+
+    for to_datetime, from_datetime in zip(to_datetimes, from_datetimes):
+        params = {
+            "symbol": investing_id,
+            "from": int(from_datetime.timestamp()),
+            "to": int(to_datetime.timestamp()),
+            "resolution": interval,
+        }
+        data = request_to_investing(endpoint="history", params=params)
+        time_format = "%H:%M %m/%d/%Y" if isinstance(interval, int) else "%m/%d/%Y"
+        result["date"] += [datetime.fromtimestamp(t).strftime(time_format) for t in data["t"]]  # type: ignore
+        result["open"] += data["o"]  # type: ignore
+        result["high"] += data["h"]  # type: ignore
+        result["low"] += data["l"]  # type: ignore
+        result["close"] += data["c"]  # type: ignore
+        if "v" in data:
+            result["volume"] += data["v"]  # type: ignore
+    if len(result["volume"]) < 1:
+        result.pop("volume")
+    return result
