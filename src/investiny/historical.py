@@ -4,6 +4,7 @@
 from datetime import datetime, timezone
 from typing import Any, Dict, Literal, Union
 
+from investiny.config import Config
 from investiny.utils import calculate_date_intervals, request_to_investing
 
 
@@ -40,7 +41,9 @@ def historical_data(
         "volume": [],
     }
 
-    time_format = "%m/%d/%Y %H:%M" if interval not in ["D", "W", "M"] else "%m/%d/%Y"
+    datetime_format = (
+        Config.time_format if interval not in ["D", "W", "M"] else Config.date_format
+    )
 
     for to_datetime, from_datetime in zip(to_datetimes, from_datetimes):
         params = {
@@ -50,7 +53,7 @@ def historical_data(
             "resolution": interval,
         }
         data = request_to_investing(endpoint="history", params=params)
-        result["date"] += [datetime.fromtimestamp(t, tz=timezone.utc).strftime(time_format) for t in data["t"]]  # type: ignore
+        result["date"] += [datetime.fromtimestamp(t, tz=timezone.utc).strftime(datetime_format) for t in data["t"]]  # type: ignore
         result["open"] += data["o"]  # type: ignore
         result["high"] += data["h"]  # type: ignore
         result["low"] += data["l"]  # type: ignore

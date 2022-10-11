@@ -8,6 +8,8 @@ from uuid import uuid4
 
 import httpx
 
+from investiny.config import Config
+
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
 
@@ -76,20 +78,19 @@ def calculate_date_intervals(
         return (from_datetimes, to_datetimes)
 
     try:
-        date_format = "%m/%d/%Y"
-        from_datetimes = [datetime.strptime(from_date, date_format)]
-        to_datetimes = [datetime.strptime(to_date, date_format)]
+        from_datetimes = [datetime.strptime(from_date, Config.date_format)]
+        to_datetimes = [datetime.strptime(to_date, Config.date_format)]
     except ValueError:
-        date_format = "%m/%d/%Y %H:%M"
         from_datetimes = [
-            datetime.strptime(from_date, date_format).astimezone(tz=timezone.utc)
+            datetime.strptime(from_date, Config.time_format).astimezone(tz=timezone.utc)
         ]
         to_datetimes = [
-            datetime.strptime(to_date, date_format).astimezone(tz=timezone.utc)
+            datetime.strptime(to_date, Config.time_format).astimezone(tz=timezone.utc)
         ]
     else:
         raise ValueError(
-            "Only supported date formats are `%m/%d/%Y` and `%m/%d/%Y %H:%M`."
+            f"Only supported date formats are `{Config.date_format}` and"
+            f" `{Config.time_format}`."
         )
 
     if from_datetimes[0] > to_datetimes[0]:
