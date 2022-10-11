@@ -113,9 +113,9 @@ def calculate_date_intervals(
     ]:  # There are no data retrieval limits for weekly and monthly intervals
         return (from_datetimes, to_datetimes)
 
-    if interval not in ["D"]:
+    if interval not in [1, "D"]:
         logging.warning(
-            "Interval calculation just implemented for `D` interval, not for"
+            "Interval calculation just implemented for `1`, `'D'` intervals, not for"
             f" {interval}, wait for its implementation."
         )
         return (from_datetimes, to_datetimes)
@@ -130,12 +130,38 @@ def calculate_date_intervals(
     # so as not to lose data, and make `investiny` more consistent.
 
     interval2limit = {
-        "D": timedelta(days=6940),  # round(365.25 * 19) days (19 years)
+        1: timedelta(days=13),  # round(5000 / 390) = 13 days (round to half a month)
+        "D": timedelta(
+            days=6940
+        ),  # round(365.25 * 19) = 6940 days (5000 days + bank holidays, weekends, etc.)
     }
 
     interval2increment = {
-        "D": timedelta(days=1),  # 1 day
+        1: timedelta(minutes=1),
+        "D": timedelta(days=1),
     }
+
+    if interval != "D":
+        no_more_than = {
+            1: timedelta(days=30.437 * 6),
+        }
+
+        if (
+            datetime.now(tz=timezone.utc)
+            - (from_datetimes[0] + interval2limit[interval])
+            > no_more_than[interval]
+        ):
+            raise ValueError(
+                "Interval between `from_date` and `to_date` cannot be greater than"
+                f" {no_more_than[interval].days} days."
+            )
+
+        if datetime.now(tz=timezone.utc) - from_datetimes[0] > no_more_than[interval]:
+            logging.warning(
+                "Note that even though the `from_date` parameter is more than 6 months"
+                " ago, due to Investing.com limitations, just the last 6 months of data"
+                " will be retrieved."
+            )
 
     if to_datetimes[0] - from_datetimes[0] > interval2limit[interval]:  # type: ignore
         max_to_datetime = to_datetimes[0]
