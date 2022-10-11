@@ -40,7 +40,8 @@ def request_to_investing(
             f"Request to Investing.com API failed with error code: {r.status_code}."
         )
     d = r.json()
-    if d["s"] != "ok":
+
+    if endpoint == "history" and d["s"] != "ok":
         raise ConnectionError(
             f"Request to Investing.com API failed with error message: {d['s']}."
             if "nextTime" not in d
