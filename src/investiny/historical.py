@@ -6,8 +6,6 @@ from typing import Any, Dict, Literal, Union
 
 from investiny.utils import calculate_date_intervals, request_to_investing
 
-__all__ = ["historical_data"]
-
 
 def historical_data(
     investing_id: int,

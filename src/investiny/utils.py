@@ -10,8 +10,6 @@ import httpx
 
 logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
-__all__ = ["calculate_date_intervals", "request_to_investing"]
-
 
 def request_to_investing(
     endpoint: Literal["history", "search"], params: Dict[str, Any]
