@@ -77,13 +77,31 @@ def calculate_date_intervals(
         from_datetimes = [to_datetimes[0] - interval2timedelta[interval]]
         return (from_datetimes, to_datetimes)
 
-    from_datetimes = [
-        datetime.strptime(from_date, "%m/%d/%Y").astimezone(tz=timezone.utc)
-    ]
-    to_datetimes = [datetime.strptime(to_date, "%m/%d/%Y").astimezone(tz=timezone.utc)]
+    try:
+        date_format = "%m/%d/%Y"
+        from_datetimes = [datetime.strptime(from_date, date_format)]
+        to_datetimes = [datetime.strptime(to_date, date_format)]
+    except ValueError:
+        date_format = "%m/%d/%Y %H:%M"
+        from_datetimes = [
+            datetime.strptime(from_date, date_format).astimezone(tz=timezone.utc)
+        ]
+        to_datetimes = [
+            datetime.strptime(to_date, date_format).astimezone(tz=timezone.utc)
+        ]
+    else:
+        raise ValueError(
+            "Only supported date formats are `%m/%d/%Y` and `%m/%d/%Y %H:%M`."
+        )
 
     if from_datetimes[0] > to_datetimes[0]:
         raise ValueError("`from_date` cannot be greater than `to_date`")
+
+    if interval in [
+        "W",
+        "M",
+    ]:  # There are no data retrieval limits for weekly and monthly intervals
+        return (from_datetimes, to_datetimes)
 
     if interval not in ["D"]:
         logging.warning(
@@ -91,6 +109,15 @@ def calculate_date_intervals(
             f" {interval}, wait for its implementation."
         )
         return (from_datetimes, to_datetimes)
+
+    # We've seen that Investing.com API limits are on 5000 results per request, which
+    # is easy to handle for days, as more or less we can get an estimation on how many
+    # days of data corresponds to 5000 results, but for intra-day data, we need to
+    # calculate the number of results per day, and then calculate the number of days
+    # that corresponds to 5000 results, taking into consideration that each exchange has
+    # it's own working hours, so we'll calculate the number of results for NASDAQ or NYSE,
+    # which are the most active exchanges, so that we overestimate the number of results
+    # so as not to lose data, and make `investiny` more consistent.
 
     interval2limit = {
         "D": timedelta(days=6940),  # round(365.25 * 19) days (19 years)
