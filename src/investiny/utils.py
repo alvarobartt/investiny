@@ -98,7 +98,7 @@ def calculate_date_intervals(
         to_datetimes = [
             datetime.strptime(to_date, Config.time_format).astimezone(tz=timezone.utc)
         ]
-    else:
+    except Exception:
         raise ValueError(
             f"Only supported date formats are `{Config.date_format}` and"
             f" `{Config.time_format}`."
