@@ -129,7 +129,7 @@ def calculate_date_intervals(
     if to_datetimes[0] - from_datetimes[0] > interval2limit[interval]:  # type: ignore
         max_to_datetime = to_datetimes[0]
         to_datetimes = [from_datetimes[0] + interval2limit[interval]]  # type: ignore
-        while to_datetimes[-1] - from_datetimes[-1] > interval2limit[interval]:  # type: ignore
+        while max_to_datetime - to_datetimes[-1] > interval2limit[interval]:  # type: ignore
             from_datetimes.append(to_datetimes[-1] + interval2increment[interval])  # type: ignore
             to_datetimes.append(from_datetimes[-1] + interval2limit[interval])  # type: ignore
         if to_datetimes[-1] != max_to_datetime:
