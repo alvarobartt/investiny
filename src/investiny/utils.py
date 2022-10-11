@@ -39,7 +39,18 @@ def request_to_investing(
         raise ConnectionError(
             f"Request to Investing.com API failed with error code: {r.status_code}."
         )
-    return r.json()  # type: ignore
+    d = r.json()
+    if d["s"] != "ok":
+        raise ConnectionError(
+            f"Request to Investing.com API failed with error message: {d['s']}."
+            if "nextTime" not in d
+            else (
+                f"Request to Investing.com API failed with error message: {d['s']}, the"
+                " market was probably closed in the introduced dates, try again with"
+                f" `from_date={datetime.fromtimestamp(d['nextTime'], tz=timezone.utc).strftime(Config.date_format)}`."
+            )
+        )
+    return d  # type: ignore
 
 
 def calculate_date_intervals(
