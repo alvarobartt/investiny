@@ -21,6 +21,7 @@ license = "MIT License"
 [tool.poetry.dependencies]
 python = "^3.8"
 httpx = "^0.23.0"
+pydantic = "^1.10.2"
 mkdocs = { version = "^1.4.0", optional = true }
 mkdocs-material = { version = "^8.5.4", optional = true }
 mkdocs-git-revision-date-localized-plugin = { version = "^1.1.0", optional = true }
