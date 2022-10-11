@@ -1,7 +1,7 @@
 # Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, Literal, Union
 
 from investiny.utils import calculate_date_intervals, request_to_investing
@@ -42,6 +42,8 @@ def historical_data(
         "volume": [],
     }
 
+    time_format = "%m/%d/%Y %H:%M" if interval not in ["D", "W", "M"] else "%m/%d/%Y"
+
     for to_datetime, from_datetime in zip(to_datetimes, from_datetimes):
         params = {
             "symbol": investing_id,
@@ -50,8 +52,7 @@ def historical_data(
             "resolution": interval,
         }
         data = request_to_investing(endpoint="history", params=params)
-        time_format = "%H:%M %m/%d/%Y" if isinstance(interval, int) else "%m/%d/%Y"
-        result["date"] += [datetime.fromtimestamp(t).strftime(time_format) for t in data["t"]]  # type: ignore
+        result["date"] += [datetime.fromtimestamp(t, tz=timezone.utc).strftime(time_format) for t in data["t"]]  # type: ignore
         result["open"] += data["o"]  # type: ignore
         result["high"] += data["h"]  # type: ignore
         result["low"] += data["l"]  # type: ignore
