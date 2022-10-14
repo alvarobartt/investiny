@@ -93,6 +93,7 @@ def calculate_date_intervals(
             if to_date
             else datetime.now()
         ]
+        limit_datetime = datetime(1970, 1, 1)
     except ValueError:
         from_datetimes = [
             datetime.strptime(from_date, Config.time_format).astimezone(tz=timezone.utc)
@@ -102,6 +103,7 @@ def calculate_date_intervals(
             if to_date
             else datetime.now(tz=timezone.utc)
         ]
+        limit_datetime = datetime(1970, 1, 1, tzinfo=timezone.utc)
     except Exception:
         raise ValueError(
             f"Only supported date formats are `{Config.date_format}` and"
@@ -110,6 +112,12 @@ def calculate_date_intervals(
 
     if from_datetimes[0] > to_datetimes[0]:
         raise ValueError("`from_date` cannot be greater than `to_date`")
+
+    if to_datetimes[0] < limit_datetime:
+        raise ValueError("`to_date` cannot be lower than 01/01/1970")
+
+    if from_datetimes[0] < limit_datetime:
+        from_datetimes = [limit_datetime]
 
     if interval in [
         "W",
