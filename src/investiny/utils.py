@@ -81,20 +81,26 @@ def calculate_date_intervals(
         "M": timedelta(days=365),  # 1 year
     }
 
-    if not from_date or not to_date:
+    if not from_date:
         to_datetimes = [datetime.now(tz=timezone.utc)]
         from_datetimes = [to_datetimes[0] - interval2timedelta[interval]]
         return (from_datetimes, to_datetimes)
 
     try:
         from_datetimes = [datetime.strptime(from_date, Config.date_format)]
-        to_datetimes = [datetime.strptime(to_date, Config.date_format)]
+        to_datetimes = [
+            datetime.strptime(to_date, Config.date_format)
+            if to_date
+            else datetime.now()
+        ]
     except ValueError:
         from_datetimes = [
             datetime.strptime(from_date, Config.time_format).astimezone(tz=timezone.utc)
         ]
         to_datetimes = [
             datetime.strptime(to_date, Config.time_format).astimezone(tz=timezone.utc)
+            if to_date
+            else datetime.now(tz=timezone.utc)
         ]
     except Exception:
         raise ValueError(
