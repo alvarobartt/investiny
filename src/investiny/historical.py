@@ -12,7 +12,7 @@ def historical_data(
     investing_id: int,
     from_date: Union[str, None] = None,
     to_date: Union[str, None] = None,
-    interval: Literal[1, 5, 15, 30, 45, 60, 120, 240, 300, "D", "W", "M"] = "D",
+    interval: Literal[1, 5, 15, 30, 60, 300, "D", "W", "M"] = "D",
 ) -> Dict[str, Any]:
     """Get historical data from Investing.com.
 

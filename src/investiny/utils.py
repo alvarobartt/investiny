@@ -57,7 +57,7 @@ def request_to_investing(
 def calculate_date_intervals(
     from_date: Union[str, None] = None,
     to_date: Union[str, None] = None,
-    interval: Literal[1, 5, 15, 30, 45, 60, 120, 240, 300, "D", "W", "M"] = "D",
+    interval: Literal[1, 5, 15, 30, 60, 300, "D", "W", "M"] = "D",
 ) -> Tuple[List[datetime], List[datetime]]:
     """Calculates the intervals between the introduced dates.
 
@@ -74,10 +74,7 @@ def calculate_date_intervals(
         5: timedelta(hours=1),  # 1 hour
         15: timedelta(hours=3),  # 3 hours
         30: timedelta(hours=6),  # 6 hours
-        45: timedelta(hours=12),  # 12 hours (half a day)
         60: timedelta(hours=24),  # 24 hours (one day)
-        120: timedelta(hours=48),  # 48 hours (two days)
-        240: timedelta(hours=96),  # 96 hours (four days)
         300: timedelta(hours=120),  # 120 hours (five days)
         "D": timedelta(days=30),  # 30 days (~ 1 month)
         "W": timedelta(days=90),  # 3 months
@@ -114,18 +111,20 @@ def calculate_date_intervals(
     ]:  # There are no data retrieval limits for weekly and monthly intervals
         return (from_datetimes, to_datetimes)
 
-    if interval not in [1, 5, 15, 30, "D"]:
+    if interval not in [1, 5, 15, 30, 60, "D"]:
         logging.warning(
-            "Interval calculation just implemented for 1, 5, 15, 30, 'D' intervals,"
+            "Interval calculation just implemented for 1, 5, 15, 30, 60, 'D' intervals,"
             f" not for {interval}, wait for its implementation."
         )
         return (from_datetimes, to_datetimes)
 
     interval2limit = {
-        1: timedelta(days=13),  # round(5000 / 390) = 13 days (round to half a month)
-        5: timedelta(days=64),  # round(5000 / 78) = 64 days (round to two months)
-        15: timedelta(days=192),  # round(5000 / 26) = 192 days (round to six months)
-        30: timedelta(days=384),  # round(5000 / 13) = 384 days (round to one year)
+        1: timedelta(days=17),
+        5: timedelta(days=91),
+        15: timedelta(days=275),
+        30: timedelta(days=554),
+        60: timedelta(days=1030),
+        300: timedelta(days=3282),
         "D": timedelta(
             days=6940
         ),  # round(365.25 * 19) = 6940 days (5000 days + bank holidays, weekends, etc.)
@@ -136,15 +135,19 @@ def calculate_date_intervals(
         5: timedelta(minutes=5),
         15: timedelta(minutes=15),
         30: timedelta(minutes=30),
+        60: timedelta(hours=1),
+        300: timedelta(hours=5),
         "D": timedelta(days=1),
     }
 
     if interval != "D":
         no_more_than = {
-            1: timedelta(days=182.5),
-            5: timedelta(days=258.5),
-            15: timedelta(days=457.5),
-            30: timedelta(days=661.5),
+            1: timedelta(days=186),
+            5: timedelta(days=259),
+            15: timedelta(days=458),
+            30: timedelta(days=662),
+            60: timedelta(days=1927),
+            300: timedelta(days=4833),
         }
 
         if (
