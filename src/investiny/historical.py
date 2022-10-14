@@ -58,7 +58,10 @@ def historical_data(
             "resolution": interval,
         }
         data = request_to_investing(endpoint="history", params=params)
-        result["date"] += [datetime.fromtimestamp(t, tz=timezone.utc).strftime(datetime_format) for t in data["t"]]  # type: ignore
+        result["date"] += [
+            datetime.fromtimestamp(t, tz=timezone.utc).strftime(datetime_format)
+            for t in data["t"]  # type: ignore
+        ]
         result["open"] += data["o"]  # type: ignore
         result["high"] += data["h"]  # type: ignore
         result["low"] += data["l"]  # type: ignore
