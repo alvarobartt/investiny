@@ -27,5 +27,5 @@ data.set_index("Date", inplace=True)
 
 ## ➕ More to come...
 
-Feel free to submit a PR to update the documenation by adding more integrations with any
+Feel free to submit a PR to update the documentation by adding more integrations with any
 other package/library that you think can be useful to be documented.
