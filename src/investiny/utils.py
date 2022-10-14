@@ -114,24 +114,18 @@ def calculate_date_intervals(
     ]:  # There are no data retrieval limits for weekly and monthly intervals
         return (from_datetimes, to_datetimes)
 
-    if interval not in [1, "D"]:
+    if interval not in [1, 5, 15, 30, "D"]:
         logging.warning(
-            "Interval calculation just implemented for `1`, `'D'` intervals, not for"
-            f" {interval}, wait for its implementation."
+            "Interval calculation just implemented for 1, 5, 15, 30, 'D' intervals,"
+            f" not for {interval}, wait for its implementation."
         )
         return (from_datetimes, to_datetimes)
 
-    # We've seen that Investing.com API limits are on 5000 results per request, which
-    # is easy to handle for days, as more or less we can get an estimation on how many
-    # days of data corresponds to 5000 results, but for intra-day data, we need to
-    # calculate the number of results per day, and then calculate the number of days
-    # that corresponds to 5000 results, taking into consideration that each exchange has
-    # it's own working hours, so we'll calculate the number of results for NASDAQ or NYSE,
-    # which are the most active exchanges, so that we overestimate the number of results
-    # so as not to lose data, and make `investiny` more consistent.
-
     interval2limit = {
         1: timedelta(days=13),  # round(5000 / 390) = 13 days (round to half a month)
+        5: timedelta(days=64),  # round(5000 / 78) = 64 days (round to two months)
+        15: timedelta(days=192),  # round(5000 / 26) = 192 days (round to six months)
+        30: timedelta(days=384),  # round(5000 / 13) = 384 days (round to one year)
         "D": timedelta(
             days=6940
         ),  # round(365.25 * 19) = 6940 days (5000 days + bank holidays, weekends, etc.)
@@ -139,39 +133,46 @@ def calculate_date_intervals(
 
     interval2increment = {
         1: timedelta(minutes=1),
+        5: timedelta(minutes=5),
+        15: timedelta(minutes=15),
+        30: timedelta(minutes=30),
         "D": timedelta(days=1),
     }
 
     if interval != "D":
         no_more_than = {
-            1: timedelta(days=30.437 * 6),
+            1: timedelta(days=182.5),
+            5: timedelta(days=258.5),
+            15: timedelta(days=457.5),
+            30: timedelta(days=661.5),
         }
 
         if (
             datetime.now(tz=timezone.utc)
             - (from_datetimes[0] + interval2limit[interval])
-            > no_more_than[interval]
+            > no_more_than[interval]  # type: ignore
         ):
             raise ValueError(
                 "Interval between `from_date` and `to_date` cannot be greater than"
-                f" {no_more_than[interval].days} days."
+                f" {no_more_than[interval].days} days."  # type: ignore
             )
 
-        if datetime.now(tz=timezone.utc) - from_datetimes[0] > no_more_than[interval]:
+        if datetime.now(tz=timezone.utc) - from_datetimes[0] > no_more_than[interval]:  # type: ignore
             logging.warning(
-                "Note that even though the `from_date` parameter is more than 6 months"
-                " ago, due to Investing.com limitations, just the last 6 months of data"
-                " will be retrieved."
+                "Note that even though the `from_date` parameter is more than"
+                f" {no_more_than[interval].days} days ago, due to Investing.com"  # type: ignore
+                f" limitations, just the last {no_more_than[interval].days} days of"  # type: ignore
+                " data will be retrieved."
             )
 
-    if to_datetimes[0] - from_datetimes[0] > interval2limit[interval]:  # type: ignore
+    if to_datetimes[0] - from_datetimes[0] > interval2limit[interval]:
         max_to_datetime = to_datetimes[0]
-        to_datetimes = [from_datetimes[0] + interval2limit[interval]]  # type: ignore
-        while max_to_datetime - to_datetimes[-1] > interval2limit[interval]:  # type: ignore
-            from_datetimes.append(to_datetimes[-1] + interval2increment[interval])  # type: ignore
-            to_datetimes.append(from_datetimes[-1] + interval2limit[interval])  # type: ignore
+        to_datetimes = [from_datetimes[0] + interval2limit[interval]]
+        while max_to_datetime - to_datetimes[-1] > interval2limit[interval]:
+            from_datetimes.append(to_datetimes[-1] + interval2increment[interval])
+            to_datetimes.append(from_datetimes[-1] + interval2limit[interval])
         if to_datetimes[-1] != max_to_datetime:
-            from_datetimes.append(to_datetimes[-1] + interval2increment[interval])  # type: ignore
+            from_datetimes.append(to_datetimes[-1] + interval2increment[interval])
             to_datetimes.append(max_to_datetime)
 
     return (from_datetimes, to_datetimes)
