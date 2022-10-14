@@ -19,7 +19,9 @@ def historical_data(
     Args:
         investing_id: Investing.com's ID for the asset.
         from_date: Initial date to retrieve historical data (formatted as m/d/Y). Defaults to None.
-        to_date: Final date to retrieve historical data (formatted as m/d/Y). Defaults to None.
+        to_date:
+            Final date to retrieve historical data (formatted as m/d/Y). Defaults to None,
+            unless `from_date` is specified, that defaults to current date.
         interval: Interval between each historical data point. Defaults to "D".
 
     Note:
@@ -28,6 +30,9 @@ def historical_data(
     Returns:
         A dictionary with the historical data from Investing.com.
     """
+    if from_date and not to_date:
+        to_date = datetime.now(tz=timezone.utc).strftime(Config.date_format)
+
     from_datetimes, to_datetimes = calculate_date_intervals(
         from_date=from_date, to_date=to_date, interval=interval
     )
