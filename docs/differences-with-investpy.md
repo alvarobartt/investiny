@@ -5,7 +5,7 @@ lets you retrieve historical data from Investing.com through `historical_data` a
 through `search_assets`, while `investpy` offers more functions to also retrieve technical indicators, economic
 calendars, dividends, etc. but those will come at some point to `investiny` too.
 
-✨ `investiny` introduces intraday data, so the specified intervals when retrieving historical data for any asset
+`investiny` introduces intraday data, so the specified intervals when retrieving historical data for any asset
 available at Investing.com goes from 1 minute to monthly data.
 
 `investpy` uses Investing.com's APIs at https://www.investing.com/instruments/HistoricalDataAjax and at

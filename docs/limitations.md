@@ -1,4 +1,5 @@
 # 🛂 Limitations
+
 After some extensive testing to explore further Investing.com's API limitations, we ran some tests to see whether Cloudflare was blocking incoming requests, and
 it's not, so the API used by `investiny` seems stable enough for the moment (🤞🏻 fingers crossed!).
 

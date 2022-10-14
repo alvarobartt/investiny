@@ -1,4 +1,4 @@
-# 🤏🏻 `investpy` but made tiny
+# 🤏🏻 `investiny` is `investpy` but made tiny
 
 **`investiny` is faster, lighter, and easier to use** than `investpy`.
 
@@ -18,7 +18,7 @@ lets you retrieve historical data from Investing.com through `historical_data` a
 through `search_assets`, while `investpy` offers more functions to also retrieve technical indicators, economic
 calendars, dividends, etc. but those will come at some point to `investiny` too.
 
-✨ `investiny` introduces intraday data, so the specified intervals when retrieving historical data for any asset
+`investiny` introduces intraday data, so the specified intervals when retrieving historical data for any asset
 available at Investing.com goes from 1 minute to monthly data.
 
 `investpy` uses Investing.com's APIs at https://www.investing.com/instruments/HistoricalDataAjax and at
@@ -35,7 +35,7 @@ which seems to be more reliable right now according to the ran tests, as well as
 
 ## 🛠️ Installation
 
-🤏🏻 `investiny` requires Python 3.8+ and can be installed with `pip` as it follows:
+`investiny` requires Python 3.8+ and can be installed with `pip` as it follows:
 
 `pip install investiny`
 

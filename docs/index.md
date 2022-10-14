@@ -1,4 +1,4 @@
-# 🤏🏻 `investpy` but made tiny
+# 🤏🏻 `investiny` is `investpy` but made tiny
 
 **`investiny` is faster, lighter, and easier to use** than `investpy`.
 
