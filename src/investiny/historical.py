@@ -30,9 +30,6 @@ def historical_data(
     Returns:
         A dictionary with the historical data from Investing.com.
     """
-    if from_date and not to_date:
-        to_date = datetime.now(tz=timezone.utc).strftime(Config.date_format)
-
     from_datetimes, to_datetimes = calculate_date_intervals(
         from_date=from_date, to_date=to_date, interval=interval
     )
