@@ -3,3 +3,4 @@
 .pytest_cache
 __pycache__
 poetry.lock
+.DS_Store

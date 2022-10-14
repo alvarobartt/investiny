@@ -23,6 +23,20 @@ def to_date() -> str:
 
 
 @pytest.fixture
+def from_date_wide_range() -> str:
+    """Initial date to retrieve historical data (formatted as m/d/Y) but with a wider range.
+    """
+    return "01/01/2000"
+
+
+@pytest.fixture
+def to_date_wide_range() -> str:
+    """Final date to retrieve historical data (formatted as m/d/Y) but with a wider range.
+    """
+    return "01/01/2022"
+
+
+@pytest.fixture
 def query() -> str:
     """Query to search assets in Investing.com."""
     return "GOOGL"

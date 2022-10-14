@@ -10,8 +10,7 @@
 		"ms-azuretools.vscode-docker",
 		"zhuangtongfa.material-theme",
 		"redhat.vscode-yaml",
-		"tamasfe.even-better-toml",
-		"seatonjiang.gitmoji-vscode",
-		"GitHub.copilot"
+		"GitHub.copilot",
+		"znck.grammarly"
 	]
 }
