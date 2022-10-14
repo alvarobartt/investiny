@@ -19,11 +19,11 @@ def request_to_investing(
     """Sends an HTTP GET request to Investing.com API with the introduced params.
 
     Args:
-        endpoint (Literal["history", "search"]): Endpoint to send the request to.
-        params (Dict[str, Any]): A dictionary with the params to send to Investing.com API.
+        endpoint: Endpoint to send the request to.
+        params: A dictionary with the params to send to Investing.com API.
 
     Returns:
-        Dict[str, Any]: A dictionary with the response from Investing.com API.
+        A dictionary with the response from Investing.com API.
     """
     url = f"https://tvc4.investing.com/{uuid4().hex}/0/0/0/0/{endpoint}"
     headers = {
@@ -62,12 +62,12 @@ def calculate_date_intervals(
     """Calculates the intervals between the introduced dates.
 
     Args:
-        from_date (Union[str, None], optional): Initial date to retrieve historical data (formatted as m/d/Y). Defaults to None.
-        to_date (Union[str, None], optional): Final date to retrieve historical data (formatted as m/d/Y). Defaults to None.
-        interval (Literal[1, 5, 15, 30, 45, 60, 120, 240, 300, "D", "W", "M"]): Interval between each historical data point. Defaults to "D".
+        from_date: Initial date to retrieve historical data (formatted as m/d/Y). Defaults to None.
+        to_date: Final date to retrieve historical data (formatted as m/d/Y). Defaults to None.
+        interval: Interval between each historical data point. Defaults to "D".
 
     Returns:
-        Tuple[List[str], List[str]]: A tuple with the from and to datetimes split by intervals.
+        A tuple with the from and to datetimes split by intervals.
     """
     interval2timedelta = {
         1: timedelta(minutes=30),  # 30 minutes (half an hour)

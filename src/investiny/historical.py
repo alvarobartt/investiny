@@ -17,16 +17,16 @@ def historical_data(
     """Get historical data from Investing.com.
 
     Args:
-        investing_id (int): Investing.com's ID for the asset.
-        from_date (Union[str, None], optional): Initial date to retrieve historical data (formatted as m/d/Y). Defaults to None.
-        to_date (Union[str, None], optional): Final date to retrieve historical data (formatted as m/d/Y). Defaults to None.
-        interval (Literal[1, 5, 15, 30, 45, 60, 120, 240, 300, "D", "W", "M"], optional): Interval between each historical data point. Defaults to "D".
+        investing_id: Investing.com's ID for the asset.
+        from_date: Initial date to retrieve historical data (formatted as m/d/Y). Defaults to None.
+        to_date: Final date to retrieve historical data (formatted as m/d/Y). Defaults to None.
+        interval: Interval between each historical data point. Defaults to "D".
 
     Note:
         If no dates are introduced, the function will retrieve the last 30 days of historical data.
 
     Returns:
-        Dict[str, Any]: A dictionary with the historical data.
+        A dictionary with the historical data from Investing.com.
     """
     from_datetimes, to_datetimes = calculate_date_intervals(
         from_date=from_date, to_date=to_date, interval=interval
