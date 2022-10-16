@@ -6,7 +6,7 @@ from typing import Any, Dict, List, Union
 from investiny.utils import request_to_investing
 
 
-def obtain_info(asset: Union[str, List[str]]) -> Dict[str, Any]:
+def info(asset: Union[str, List[str]]) -> Dict[str, Any]:
     results = request_to_investing(
         endpoint="quotes",
         params={"symbols": asset if isinstance(asset, str) else ",".join(asset)},
