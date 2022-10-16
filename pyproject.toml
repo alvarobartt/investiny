@@ -38,6 +38,7 @@ isort = "^5.10.1"
 mypy = "^0.971"
 pre-commit = "^2.20.0"
 pytest = "^7.1.2"
+types-pytz = "^2022.4.0.0"
 
 [tool.isort]
 profile = "black"
