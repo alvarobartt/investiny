@@ -9,6 +9,8 @@ on:
       - .github/workflows/publish-docker.yaml
       - .dockerignore
       - Dockerfile
+      - pyproject.toml
+      - src/investiny/**
 
 env:
   REGISTRY: ghcr.io
