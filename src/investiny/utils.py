@@ -14,7 +14,7 @@ logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
 
 def request_to_investing(
-    endpoint: Literal["history", "search", "quotes"], params: Dict[str, Any]
+    endpoint: Literal["history", "search", "quotes", "symbols"], params: Dict[str, Any]
 ) -> Union[Dict[str, Any], List[Dict[str, Any]]]:
     """Sends an HTTP GET request to Investing.com API with the introduced params.
 

@@ -17,3 +17,18 @@ def obtain_info(asset: Union[str, List[str]]) -> Dict[str, Any]:
     for result in results["d"]:
         info[result["n"]] = result["v"]
     return info
+
+
+def investing_info(investing_id: int) -> Dict[str, Any]:
+    """Get asset's information used internally by Investing.com.
+
+    Args:
+        investing_id: Investing.com's ID for the asset.
+
+    Returns:
+        A dictionary with the asset's information used internally by Investing.com.
+    """
+    return request_to_investing(
+        endpoint="symbols",
+        params={"symbol": investing_id},
+    )
