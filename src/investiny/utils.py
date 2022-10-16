@@ -82,7 +82,7 @@ def calculate_date_intervals(
     }
 
     if not from_date:
-        to_datetimes = [datetime.now(tz=timezone.utc)]
+        to_datetimes = [datetime.now() + timedelta(days=1)]
         from_datetimes = [to_datetimes[0] - interval2timedelta[interval]]
         return (from_datetimes, to_datetimes)
 
@@ -91,7 +91,7 @@ def calculate_date_intervals(
         to_datetimes = [
             datetime.strptime(to_date, Config.date_format) + timedelta(days=1)
             if to_date
-            else datetime.now()
+            else datetime.now() + timedelta(days=1)
         ]
         limit_datetime = datetime(1970, 1, 1)
     except ValueError:
