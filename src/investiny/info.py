@@ -23,10 +23,11 @@ def info(asset: Union[str, List[str]]) -> Dict[str, Any]:
         endpoint="quotes",
         params={"symbols": asset if isinstance(asset, str) else ",".join(asset)},
     )
-    if len(results["d"]) < 2:
-        return {results["d"][0]["n"]: results["d"][0]["v"]}
+    actual_results = results["d"]  # type: ignore
+    if len(actual_results) < 2:
+        return {actual_results[0]["n"]: actual_results[0]["v"]}
     r = {}
-    for result in results["d"]:
+    for result in actual_results:
         r[result["n"]] = result["v"]
     return r
 
@@ -40,7 +41,7 @@ def investing_info(investing_id: int) -> Dict[str, Any]:
     Returns:
         A dictionary with the asset's information used internally by Investing.com.
     """
-    return request_to_investing(
+    return request_to_investing(  # type: ignore
         endpoint="symbols",
         params={"symbol": investing_id},
     )
