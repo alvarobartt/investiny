@@ -1,10 +1,13 @@
 # Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any, Dict, Literal, Union
 
+import pytz
+
 from investiny.config import Config
+from investiny.info import investing_info
 from investiny.utils import calculate_date_intervals, request_to_investing
 
 
@@ -47,6 +50,9 @@ def historical_data(
         Config.time_format if interval not in ["D", "W", "M"] else Config.date_format
     )
 
+    info = investing_info(investing_id=investing_id)
+    tz = pytz.timezone(info["timezone"])
+
     for to_datetime, from_datetime in zip(to_datetimes, from_datetimes):
         params = {
             "symbol": investing_id,
@@ -56,7 +62,7 @@ def historical_data(
         }
         data = request_to_investing(endpoint="history", params=params)
         result["date"] += [
-            datetime.fromtimestamp(t, tz=timezone.utc).strftime(datetime_format)
+            datetime.fromtimestamp(t, tz=tz).strftime(datetime_format)
             for t in data["t"]  # type: ignore
         ]
         result["open"] += data["o"]  # type: ignore
