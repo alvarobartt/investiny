@@ -57,3 +57,8 @@ def assets() -> str:
 def asset_list() -> List[str]:
     """List of assets to retrieve their information from Investing.com."""
     return ["NASDAQ:AAPL", "NASDAQ:GOOGL"]
+
+
+@pytest.fixture
+def investing_id_no_volume() -> int:
+    return 1

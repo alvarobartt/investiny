@@ -40,3 +40,10 @@ def test_historical_wide_range(
     )
     assert res["date"][0] == from_date_wide_range
     assert res["date"][-1] == to_date_wide_range
+
+
+@pytest.mark.usefixtures("investing_id_no_volume")
+def test_historical_no_volume(investing_id_no_volume: int) -> None:
+    res = historical_data(investing_id=investing_id_no_volume)
+    assert isinstance(res, dict)
+    assert "volume" not in res.keys()

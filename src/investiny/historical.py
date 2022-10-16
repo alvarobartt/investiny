@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 from typing import Any, Dict, Literal, Union
 
 from investiny.config import Config
+from investiny.info import investing_info
 from investiny.utils import calculate_date_intervals, request_to_investing
 
 
@@ -44,6 +45,8 @@ def historical_data(
         Config.time_format if interval not in ["D", "W", "M"] else Config.date_format
     )
 
+    has_volume = not investing_info(investing_id=investing_id)["has_no_volume"]
+
     for to_datetime, from_datetime in zip(to_datetimes, from_datetimes):
         params = {
             "symbol": investing_id,
@@ -64,7 +67,7 @@ def historical_data(
         result["high"] += data["h"]  # type: ignore
         result["low"] += data["l"]  # type: ignore
         result["close"] += data["c"]  # type: ignore
-        if "v" in data:
+        if has_volume:
             result["volume"] += data["v"]  # type: ignore
     if len(result["volume"]) < 1:
         result.pop("volume")
