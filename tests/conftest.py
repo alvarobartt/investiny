@@ -1,6 +1,8 @@
 # Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
+from typing import List
+
 import pytest
 
 
@@ -40,3 +42,21 @@ def to_date_wide_range() -> str:
 def query() -> str:
     """Query to search assets in Investing.com."""
     return "GOOGL"
+
+
+@pytest.fixture
+def asset() -> str:
+    """Asset to retrieve its information from Investing.com."""
+    return "NASDAQ:AAPL"
+
+
+@pytest.fixture
+def assets() -> str:
+    """Comma-separated assets to retrieve their information from Investing.com."""
+    return "NASDAQ:AAPL,NASDAQ:GOOGL"
+
+
+@pytest.fixture
+def asset_list() -> List[str]:
+    """List of assets to retrieve their information from Investing.com."""
+    return ["NASDAQ:AAPL", "NASDAQ:GOOGL"]
