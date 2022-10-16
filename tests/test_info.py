@@ -1,6 +1,3 @@
-# Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
-# See LICENSE for details.
-
 from typing import List
 
 import pytest

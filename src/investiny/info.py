@@ -1,6 +1,3 @@
-# Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
-# See LICENSE for details.
-
 from typing import Any, Dict, List, Union
 
 from investiny.utils import request_to_investing

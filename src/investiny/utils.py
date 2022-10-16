@@ -1,6 +1,3 @@
-# Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
-# See LICENSE for details.
-
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Any, Dict, List, Literal, Tuple, Union

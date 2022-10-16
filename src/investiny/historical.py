@@ -1,6 +1,3 @@
-# Copyright 2022 Alvaro Bartolome, alvarobartt @ GitHub
-# See LICENSE for details.
-
 from datetime import datetime, timedelta
 from typing import Any, Dict, Literal, Union
 
