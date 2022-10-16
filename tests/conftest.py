@@ -15,27 +15,27 @@ def investing_id() -> int:
 @pytest.fixture
 def from_date() -> str:
     """Initial date to retrieve historical data (formatted as m/d/Y)."""
-    return "01/01/2021"
+    return "01/04/2021"
 
 
 @pytest.fixture
 def to_date() -> str:
     """Final date to retrieve historical data (formatted as m/d/Y)."""
-    return "01/01/2022"
+    return "12/31/2021"
 
 
 @pytest.fixture
 def from_date_wide_range() -> str:
     """Initial date to retrieve historical data (formatted as m/d/Y) but with a wider range.
     """
-    return "01/01/2000"
+    return "01/03/2000"
 
 
 @pytest.fixture
 def to_date_wide_range() -> str:
     """Final date to retrieve historical data (formatted as m/d/Y) but with a wider range.
     """
-    return "01/01/2022"
+    return "12/31/2021"
 
 
 @pytest.fixture

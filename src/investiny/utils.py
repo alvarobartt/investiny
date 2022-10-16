@@ -89,7 +89,7 @@ def calculate_date_intervals(
     try:
         from_datetimes = [datetime.strptime(from_date, Config.date_format)]
         to_datetimes = [
-            datetime.strptime(to_date, Config.date_format)
+            datetime.strptime(to_date, Config.date_format) + timedelta(days=1)
             if to_date
             else datetime.now()
         ]
