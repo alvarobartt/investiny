@@ -45,7 +45,10 @@ def historical_data(
         Config.time_format if interval not in ["D", "W", "M"] else Config.date_format
     )
 
-    has_volume = not investing_info(investing_id=investing_id)["has_no_volume"]
+    info = investing_info(investing_id=investing_id)
+
+    has_volume = not info["has_no_volume"]
+    days_shift = 1 if info["type"] in ["Yield"] else 0
 
     for to_datetime, from_datetime in zip(to_datetimes, from_datetimes):
         params = {
@@ -55,8 +58,6 @@ def historical_data(
             "resolution": interval,
         }
         data = request_to_investing(endpoint="history", params=params)
-        # Dates are shifted due to an Investing.com issue with returned timestamps
-        days_shift = (datetime.fromtimestamp(data["t"][0]) - from_datetime).days  # type: ignore
         result["date"] += [
             (datetime.fromtimestamp(t) - timedelta(days=days_shift)).strftime(
                 datetime_format
