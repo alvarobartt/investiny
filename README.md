@@ -23,7 +23,7 @@ available at Investing.com goes from 1 minute to monthly data.
 
 `investpy` uses Investing.com's APIs at https://www.investing.com/instruments/HistoricalDataAjax and at
 https://api.investing.com/api/financialdata/historical, that are Cloudflare protected and not working any more,
-as you'll end up getting blocked with 403 Forbidden HTTP code; while `investiny` is using https://tvc4.investing.com/,
+as you'll end up getting blocked with 403 Forbidden HTTP code; while `investiny` is using https://tvc6.investing.com/,
 which seems to be more reliable right now according to the ran tests, as well as providing intraday data.
 
 | | Intraday Data | Any Range Historical Data | Search Assets/Quotes | Dividends | Economic Calendar | Technical Indicators | Economic News |

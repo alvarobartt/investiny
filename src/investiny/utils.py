@@ -22,7 +22,7 @@ def request_to_investing(
     Returns:
         A dictionary with the response from Investing.com API.
     """
-    url = f"https://tvc4.investing.com/{uuid4().hex}/0/0/0/0/{endpoint}"
+    url = f"https://tvc6.investing.com/{uuid4().hex}/0/0/0/0/{endpoint}"
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like"
