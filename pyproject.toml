@@ -14,8 +14,8 @@ authors = [
 ]
 readme = "README.md"
 homepage = "https://github.com/alvarobartt/investiny"
-documentation = "https://github.com/alvarobartt/investiny"
-repository = "https://investiny.readthedocs.io/"
+repository = "https://github.com/alvarobartt/investiny"
+documentation = "https://investiny.readthedocs.io/"
 license = "MIT License"
 
 [tool.poetry.dependencies]
